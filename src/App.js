@@ -5,12 +5,11 @@ import Menu from './components/Menu';
 
 function App() {
     const [menuItem, setMenuItem] = useState(menu);
+    const categories = ['all', ...new Set(menu.map((item) => item.category))];
 
     const onFilterMenu = (category) => {
         const newMenu = menu.filter((item) => {
-            if (category === 'all') {
-                return menu;
-            }
+            if (category === 'all') return menu;
             return item.category === category;
         });
         setMenuItem(newMenu);
@@ -23,7 +22,10 @@ function App() {
                     <h2>our menu</h2>
                     <div className='underline'></div>
                 </div>
-                <Categories onFilterMenu={onFilterMenu} />
+                <Categories
+                    onFilterMenu={onFilterMenu}
+                    categories={categories}
+                />
                 <div className='section-center'>
                     {menuItem.map((item) => {
                         return <Menu menu={item} key={item.id} />;
